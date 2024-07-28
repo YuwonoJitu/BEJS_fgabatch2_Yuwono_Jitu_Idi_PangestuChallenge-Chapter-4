@@ -1,18 +1,10 @@
-const express = require('express');
-const router = express.Router();
+var express = require('express');
+var router = express.Router();
 
-// Example middleware function
-const exampleMiddleware = (req, res, next) => {
-    console.log('Example middleware');
-    next();
-};
+const USER_CONTROLLER = require('../../../../controllers/user.controller');
 
-// Example route
-router.get('/example', (req, res) => {
-    res.send('Example route');
-});
-
-// Use middleware function correctly
-router.use(exampleMiddleware);
+router.get('/', USER_CONTROLLER.getUser);      
+router.get('/:userid', USER_CONTROLLER.getUserById);   // Rute untuk untuk mendapatkan pengguna berdasarkan ID
+router.post('/', USER_CONTROLLER.createUser);       // rute untuk detail informasi user (tampilkan juga profilnya).
 
 module.exports = router;

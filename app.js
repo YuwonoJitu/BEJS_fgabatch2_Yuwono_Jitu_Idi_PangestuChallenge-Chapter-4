@@ -1,11 +1,16 @@
-const express = require('express');
-const app = express();
-const apiRoutes = require('./routes/api');
+var express = require("express");
+var path = require("path");
+var cookieParser = require("cookie-parser");
+var logger = require("morgan");
+const INDEX_ROUTES = require("./routes/index");
 
-// Use the API routes
-app.use('/api', apiRoutes);
+var app = express();
 
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
-});
+app.use(logger("dev"));
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser());
+app.use(express.static(path.join(__dirname, "public")));
+app.use(INDEX_ROUTES);
+
+module.exports = app;
